@@ -1,7 +1,7 @@
-Sample App Api
+# Sample App Api
 
-Build mvn clean install
+Build `mvn clean install`
 
-Run ./target/sample-app-api.jar
+Run `./target/sample-app-api.jar`
 
-Run in Dev mode mvn spring-boot:run
+Run in Dev mode `mvn spring-boot:run`
