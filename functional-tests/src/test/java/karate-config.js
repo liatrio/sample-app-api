@@ -16,6 +16,6 @@ function fn() {
     return {
         // env: env,
         // myVarName: 'someValue',
-        apiUrl : 'localhost'
+        apiUrl : 'http://localhost:8080'
     };
 }
