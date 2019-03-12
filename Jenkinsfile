@@ -33,7 +33,7 @@ pipeline {
             }
             steps {
                 mavenJxBuild()
-                sh "jx step post build --image $DOCKER_REGISTRY/$ORG/$APP_NAME:\$(cat VERSION)"
+                sh "jx step post build --image $DOCKER_REGISTRY/$ORG/$APP_NAME:$VERSION"
             }
         }
         stage('Promote to Environments') {
@@ -43,13 +43,13 @@ pipeline {
             steps {
                 container('maven') {
                     dir('charts/sample-app-api') {
-                        sh "jx step changelog --version v\$(cat ../../VERSION)"
+                        sh "jx step changelog --version $VERSION"
 
                         // release the helm chart
                         sh "jx step helm release"
 
                         // promote through all 'Auto' promotion Environments
-                        sh "jx promote -b --all-auto --timeout 1h --version \$(cat ../../VERSION)"
+                        sh "jx promote -b --all-auto --timeout 1h --version $VERSION"
                     }
                 }
             }
@@ -57,7 +57,7 @@ pipeline {
     }
     post {
         always {
-            logstashSend failBuild: true, maxLines: 1000
+//            logstashSend failBuild: true, maxLines: 1000
             cleanWs()
         }
     }
