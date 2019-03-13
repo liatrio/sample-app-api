@@ -33,7 +33,6 @@ pipeline {
             }
             steps {
                 mavenJxBuild()
-                sh "jx step post build --image $DOCKER_REGISTRY/$ORG/$APP_NAME:$VERSION"
             }
         }
         stage('Promote to Environments') {
