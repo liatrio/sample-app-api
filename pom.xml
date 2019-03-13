@@ -10,7 +10,7 @@
     </parent>
     <groupId>io.liatr</groupId>
     <artifactId>sample-app-api</artifactId>
-    <version>0.1.0-${BUILD_NUMBER}</version>
+    <version>0.0.13</version>
     <name>sample-app-api</name>
     <description>Api for sample app</description>
 
