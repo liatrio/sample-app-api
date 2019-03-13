@@ -11,7 +11,6 @@ pipeline {
     }
     stages {
         stage('Build') {
-
             steps {
                 mavenJxBuild()
             }
