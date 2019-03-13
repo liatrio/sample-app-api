@@ -10,23 +10,8 @@ pipeline {
         CHARTMUSEUM_CREDS = credentials('jenkins-x-chartmuseum')
     }
     stages {
-        stage('CI Build and push snapshot') {
-            when {
-                branch 'PR-*'
-            }
-            environment {
-                PREVIEW_VERSION = "0.0.0-SNAPSHOT-$BRANCH_NAME-$BUILD_NUMBER"
-                PREVIEW_NAMESPACE = "$APP_NAME-$BRANCH_NAME".toLowerCase()
-                HELM_RELEASE = "$PREVIEW_NAMESPACE".toLowerCase()
-            }
-            steps {
-                mavenJxBuild()
-            }
-        }
-        stage('Build Release') {
-            when {
-                branch 'master'
-            }
+        stage('Build') {
+
             steps {
                 mavenJxBuild()
             }
@@ -36,17 +21,7 @@ pipeline {
                 branch 'master'
             }
             steps {
-                container('maven') {
-                    dir('charts/sample-app-api') {
-                        sh "jx step changelog --version $VERSION"
-
-                        // release the helm chart
-                        sh "jx step helm release"
-
-                        // promote through all 'Auto' promotion Environments
-                        sh "jx promote -b --all-auto --timeout 1h --version $VERSION"
-                    }
-                }
+                promoteJx()
             }
         }
     }
