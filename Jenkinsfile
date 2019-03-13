@@ -21,10 +21,6 @@ pipeline {
             }
             steps {
                 mavenJxBuild()
-                dir('charts/preview') {
-                    sh "make preview"
-                    sh "jx preview --app $APP_NAME --dir ../.."
-                }
             }
         }
         stage('Build Release') {
