@@ -23,6 +23,11 @@ pipeline {
                 promoteJx()
             }
         }
+        stage('Run functional tests') {
+            steps {
+                sh "printenv"
+            }
+        }
     }
     post {
         always {
