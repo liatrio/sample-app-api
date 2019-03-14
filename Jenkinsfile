@@ -13,7 +13,6 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh "exit 1"
                 mavenJxBuild()
             }
         }
