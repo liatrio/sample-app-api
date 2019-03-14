@@ -1,4 +1,4 @@
-library 'pipeline-library'
+library 'pipeline-library@ENG-311'
 
 pipeline {
     agent {
@@ -26,6 +26,7 @@ pipeline {
         }
         stage("functional test") {
             steps {
+                sh "printenv"
                 sendBuildEvent(eventType:'test')
             }
         }
