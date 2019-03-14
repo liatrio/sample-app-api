@@ -6,6 +6,7 @@ pipeline {
     }
     environment {
         ORG = 'liatrio'
+        TEAM_NAME = 'flywheel'
         APP_NAME = 'sample-app-api'
         CHARTMUSEUM_CREDS = credentials('jenkins-x-chartmuseum')
     }
@@ -23,16 +24,21 @@ pipeline {
                 promoteJx()
             }
         }
-        stage('Run functional tests') {
+        stage("functional test") {
             steps {
-                sh "printenv"
+                sendBuildEvent(eventType:'test')
             }
         }
     }
     post {
         always {
-//            logstashSend failBuild: true, maxLines: 1000
             cleanWs()
+        }
+        fixed {
+            sendHealthyEvent()
+        }
+        regression {
+            sendUnhealthyEvent()
         }
     }
 }
