@@ -1,4 +1,4 @@
-library 'pipeline-library@ENG-313'
+library 'pipeline-library'
 
 pipeline {
     agent {
