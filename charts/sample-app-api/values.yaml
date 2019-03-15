@@ -3,8 +3,8 @@
 # Declare variables to be passed into your templates.
 replicaCount: 1
 image:
-  repository: draft
-  tag: dev
+  repository: 281127131043.dkr.ecr.us-east-1.amazonaws.com/liatrio/sample-app-api
+  tag: 0.3.0-23
   pullPolicy: IfNotPresent
 service:
   name: sample-app-api
