@@ -1,13 +1,8 @@
-function fn() {
-    var env = karate.env; // get system property 'karate.env'
-    if (!env) {
-        env = 'dev';
-    }
-    var config = {
-        env: env,
-        myVarName: 'someValue',
-        baseUrl : 'localhost:8080'
+function () {
+    var config = { // base config JSON
+      appUrl: karate.properties['appUrl']
     };
-    // config.baseUrl = karate.properties['app.url'];
+    karate.log('baseUrl system property was:', config.appUrl);
+
     return config;
 }
