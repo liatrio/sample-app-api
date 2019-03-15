@@ -1,5 +1,5 @@
 function fn() {
-    var env = 'dev'; // get system property 'karate.env'
+    var env = karate.env; // get system property 'karate.env'
     if (!env) {
         env = 'dev';
     }
@@ -8,14 +8,6 @@ function fn() {
         myVarName: 'someValue',
         apiUrl : 'localhost'
     };
-    if (env == 'dev') {
-        config.baseUrl = 'localhost'
-    } else if (env == 'e2e') {
-        config.baseUrl = 'localhost'
-    }
-    return {
-        // env: env,
-        // myVarName: 'someValue',
-        apiUrl : karate.properties['app.url']
-    }
+    config.apiUrl = karate.properties['app.url'];
+    return config;
 }
