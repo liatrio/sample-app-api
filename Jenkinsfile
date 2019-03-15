@@ -27,6 +27,9 @@ pipeline {
         stage("functional test") {
             steps {
                 sendBuildEvent(eventType:'test')
+                container('maven') {
+                    sh "cd functional-tests && mvn clean test -Dapp.url=${APP_URL}"
+                }
             }
         }
     }

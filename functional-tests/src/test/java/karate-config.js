@@ -16,6 +16,6 @@ function fn() {
     return {
         // env: env,
         // myVarName: 'someValue',
-        apiUrl : 'http://localhost:8080'
-    };
+        apiUrl : karate.properties['app.url']
+    }
 }
