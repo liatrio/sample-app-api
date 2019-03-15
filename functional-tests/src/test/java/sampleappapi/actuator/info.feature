@@ -1,4 +1,4 @@
-Feature: Tests to make sure app is up
+Feature: Tests to make actuator is configured
 
 Background:
   * url appUrl
