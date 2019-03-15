@@ -1,5 +1,7 @@
 Feature: Tests to make sure app is up
 
+  Background:
+    * url baseUrl
   Scenario: Check app for hello World route
     Given url  apiUrl
     Given path 'hello'

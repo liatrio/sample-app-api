@@ -6,8 +6,8 @@ function fn() {
     var config = {
         env: env,
         myVarName: 'someValue',
-        apiUrl : 'localhost:8080'
+        baseUrl : 'localhost:8080'
     };
-    config.apiUrl = karate.properties['app.url'];
+    // config.baseUrl = karate.properties['app.url'];
     return config;
 }
