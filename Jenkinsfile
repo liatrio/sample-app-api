@@ -1,4 +1,4 @@
-library 'pipeline-library@ENG-311'
+library 'pipeline-library'
 
 pipeline {
     agent {
@@ -7,7 +7,6 @@ pipeline {
     environment {
         ORG = 'liatrio'
         TEAM_NAME = 'flywheel'
-        APP_NAME = 'sample-app-api'
         CHARTMUSEUM_CREDS = credentials('jenkins-x-chartmuseum')
     }
     stages {
