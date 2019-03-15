@@ -1,7 +1,7 @@
 Feature: Tests to make sure app is up
 
   Scenario: Check app for hello World route
-    Given url  java.lang.System.getenv('APP_URL')
+    Given url  apiUrl
     Given path 'hello'
     When method get
     Then status 200
