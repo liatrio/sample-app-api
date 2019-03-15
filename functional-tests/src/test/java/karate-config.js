@@ -1,8 +1,8 @@
 function () {
     var config = { // base config JSON
-      baseUrl: karate.properties['baseUrl']
+      appUrl: karate.properties['appUrl']
     };
-    karate.log('baseUrl system property was:', config.baseUrl);
+    karate.log('baseUrl system property was:', config.appUrl);
 
     return config;
 }

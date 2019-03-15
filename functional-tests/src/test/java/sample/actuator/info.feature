@@ -1,7 +1,7 @@
 Feature: Tests to make sure app is up
 
 Background:
-  * url baseUrl
+  * url appUrl
 
 Scenario: Check info actuator
   Given path 'actuator/info'

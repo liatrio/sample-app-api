@@ -1,4 +1,4 @@
-library 'pipeline-library'
+library 'pipeline-library@ENG-311'
 
 pipeline {
     agent {
@@ -27,6 +27,9 @@ pipeline {
         stage("functional test") {
             steps {
                 sendBuildEvent(eventType:'test')
+                container('maven') {
+                    sh "cd functional-tests && mvn clean test -DappUrl=${APP_URL}"
+                }
             }
         }
     }
