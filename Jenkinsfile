@@ -22,6 +22,7 @@ pipeline {
             }
             steps {
                 promoteJx()
+                sh'jx get previews -c'
             }
         }
         stage("functional test") {
