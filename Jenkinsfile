@@ -14,7 +14,6 @@ pipeline {
         stage('Build') {
             steps {
                 mavenJxBuild()
-                sh'jx get previews -c'
             }
         }
         stage('Promote to Environments') {
