@@ -1,21 +1,8 @@
-function fn() {
-    var env = 'dev'; // get system property 'karate.env'
-    if (!env) {
-        env = 'dev';
-    }
-    var config = {
-        env: env,
-        myVarName: 'someValue',
-        apiUrl : 'localhost'
+function () {
+    var config = { // base config JSON
+      appUrl: karate.properties['appUrl']
     };
-    if (env == 'dev') {
-        config.baseUrl = 'localhost'
-    } else if (env == 'e2e') {
-        config.baseUrl = 'localhost'
-    }
-    return {
-        // env: env,
-        // myVarName: 'someValue',
-        apiUrl : 'http://localhost:8080'
-    };
+    karate.log('baseUrl system property was:', config.appUrl);
+
+    return config;
 }
