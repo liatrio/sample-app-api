@@ -27,7 +27,10 @@ pipeline {
             steps {
                 sendBuildEvent(eventType:'test')
                 container('maven') {
-                    sh "cd functional-tests && mvn clean test -DappUrl=${APP_URL}"
+                    retry(3) {
+                        sleep 10
+                        sh "cd functional-tests && mvn clean test -DappUrl=${APP_URL}"
+                    }
                 }
             }
         }
