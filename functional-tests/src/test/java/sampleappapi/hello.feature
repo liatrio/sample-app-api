@@ -4,7 +4,7 @@ Background:
   * url appUrl
 
 Scenario: Check hello endpoint
-  * configure retry = { count: 5, interval: 0 }
+  * configure retry = { count: 5, interval: 10 }
   Given path 'hello'
   When method get
   And retry until responseStatus == 200
