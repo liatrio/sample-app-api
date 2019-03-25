@@ -38,6 +38,7 @@ pipeline {
         }
         fixed {
             sendHealthyEvent()
+            sendBuildEvent(jobType:'deploy')
         }
         regression {
             sendUnhealthyEvent()
