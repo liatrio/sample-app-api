@@ -31,6 +31,11 @@ pipeline {
                 }
             }
         }
+        stage("deploy it") {
+            steps {
+                sendBuildEvent(jobType:'deploy')
+            }
+        }
     }
     post {
         always {
@@ -38,7 +43,6 @@ pipeline {
         }
         fixed {
             sendHealthyEvent()
-            sendBuildEvent(jobType:'deploy')
         }
         regression {
             sendUnhealthyEvent()
