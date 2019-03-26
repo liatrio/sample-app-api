@@ -13,6 +13,8 @@ pipeline {
         stage('Build') {
             steps {
                 mavenJxBuild()
+                logstashSend failBuild: false, maxLines: 1
+
             }
         }
         stage('Promote to Environments') {
@@ -21,6 +23,7 @@ pipeline {
             }
             steps {
                 promoteJx()
+                logstashSend failBuild: false, maxLines: 1
             }
         }
         stage("functional test") {
@@ -29,11 +32,13 @@ pipeline {
                 container('maven') {
                     sh "cd functional-tests && mvn clean test -DappUrl=${APP_URL}"
                 }
+                logstashSend failBuild: false, maxLines: 1
             }
         }
         stage("deploy it") {
             steps {
                 sendBuildEvent(jobType:'deploy')
+                logstashSend failBuild: false, maxLines: 1
             }
         }
     }
