@@ -40,6 +40,7 @@ pipeline {
     post {
         always {
             cleanWs()
+            logstashSend failBuild: false, maxLines: 1
         }
         fixed {
             sendHealthyEvent()
