@@ -2,18 +2,47 @@ apiVersion: skaffold/v1beta2
 kind: Config
 build:
   artifacts:
-  - image: sample-app-api
+  - image: changeme
     context: .
     docker: {}
   tagPolicy:
     envTemplate:
-      template: "{{ .DOCKER_REGISTRY }}/myproject/{{ .IMAGE_NAME }}"
+      template: '{{.DOCKER_REGISTRY}}/liatrio/sample-app-api:{{.VERSION}}'
   local: {}
 deploy:
-  helm:
-    releases:
-    - name: sample-app-api
-      namespace: myproject
-      chartPath: charts/springboot-local
-      setValueTemplates:
-        image.repository: '{{ .DOCKER_REGISTRY }}/myproject/{{ .IMAGE_NAME }}'
+  kubectl: {}
+profiles:
+- name: dev
+  build:
+    artifacts:
+    - docker: {}
+    tagPolicy:
+      envTemplate:
+        template: '{{.DOCKER_REGISTRY}}/liatrio/sample-app-api:{{.DIGEST_HEX}}'
+    local: {}
+  deploy:
+    helm:
+      releases:
+      - name: sample-app-api
+        chartPath: charts/sample-app-api
+        setValueTemplates:
+          image.repository: '{{.DOCKER_REGISTRY}}/liatrio/sample-app-api'
+          image.tag: '{{.DIGEST_HEX}}'
+- name: minishift
+  build:
+    artifacts:
+      - image: sample-app-api
+        context: .
+        docker: {}
+    tagPolicy:
+      envTemplate:
+        template: "{{ .DOCKER_REGISTRY }}/myproject/{{ .IMAGE_NAME }}"
+    local: {}
+  deploy:
+    helm:
+      releases:
+        - name: sample-app-api
+          namespace: myproject
+          chartPath: charts/springboot-local
+          setValueTemplates:
+            image.repository: '{{ .DOCKER_REGISTRY }}/myproject/{{ .IMAGE_NAME }}'

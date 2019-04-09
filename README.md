@@ -20,6 +20,6 @@ export DOCKER_REGISTRY=$(minishift openshift registry)
 eval $(minishift oc-env)
 eval $(minishift docker-env)
 oc login -u system:admin
-skaffold dev
+skaffold -p minishift dev
 
 ```
