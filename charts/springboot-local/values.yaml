@@ -6,14 +6,16 @@ replicaCount: 1
 
 image:
   repository: local-sample-app-api
-  tag: latest
   pullPolicy: IfNotPresent
 
 nameOverride: ""
 fullnameOverride: ""
 
 service:
+  name: nginx
   type: ClusterIP
+  externalPort: 8080
+  internalPort: 8080
   port: 8080
 
 ingress:
