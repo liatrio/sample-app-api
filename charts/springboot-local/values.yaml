@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: local-sample-app-api
+  repository: sample-app-api
   pullPolicy: IfNotPresent
 
 nameOverride: ""

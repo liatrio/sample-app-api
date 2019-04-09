@@ -2,7 +2,7 @@ apiVersion: skaffold/v1beta7
 kind: Config
 build:
   artifacts:
-  - image: sample-app-api
+  - image: 172.30.1.1:5000/myproject/sample-app-api
     context: .
     docker: {}
   tagPolicy:
@@ -12,7 +12,7 @@ deploy:
   helm:
     releases:
     - name: sample-app-api
+      namespace: myproject
       chartPath: charts/springboot-local
       values:
-        image.name: sample-app-api
-        image.repository: sample-app-api
+        image.repository: 172.30.1.1:5000/myproject/sample-app-api
