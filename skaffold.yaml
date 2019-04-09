@@ -2,11 +2,12 @@ apiVersion: skaffold/v1beta7
 kind: Config
 build:
   artifacts:
-  - image: 172.30.1.1:5000/myproject/sample-app-api
+  - image: sample-app-api
     context: .
     docker: {}
   tagPolicy:
-    sha256: {}
+    envTemplate:
+      template: "{{ .DOCKER_REGISTRY }}/myproject/{{ .IMAGE_NAME }}"
   local: {}
 deploy:
   helm:
@@ -14,5 +15,5 @@ deploy:
     - name: sample-app-api
       namespace: myproject
       chartPath: charts/springboot-local
-      values:
-        image.repository: 172.30.1.1:5000/myproject/sample-app-api
+      setValueTemplates:
+        image.repository: '{{ .DOCKER_REGISTRY }}/myproject/{{ .IMAGE_NAME }}'
