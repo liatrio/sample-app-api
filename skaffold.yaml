@@ -46,3 +46,4 @@ profiles:
           chartPath: charts/springboot-local
           setValueTemplates:
             image.repository: '{{ .DOCKER_REGISTRY }}/myproject/{{ .IMAGE_NAME }}'
+            image.tag: 'latest'
