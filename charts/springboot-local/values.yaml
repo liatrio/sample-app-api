@@ -12,7 +12,7 @@ nameOverride: ""
 fullnameOverride: ""
 
 service:
-  name: nginx
+  name: spring-boot
   type: ClusterIP
   externalPort: 8080
   internalPort: 8080
