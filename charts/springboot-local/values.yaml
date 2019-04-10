@@ -5,15 +5,17 @@
 replicaCount: 1
 
 image:
-  repository: local-sample-app-api
-  tag: latest
+  repository: sample-app-api
   pullPolicy: IfNotPresent
 
 nameOverride: ""
 fullnameOverride: ""
 
 service:
+  name: spring-boot
   type: ClusterIP
+  externalPort: 8080
+  internalPort: 8080
   port: 8080
 
 ingress:
