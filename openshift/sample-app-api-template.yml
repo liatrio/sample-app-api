@@ -36,41 +36,6 @@ parameters:
     from: "[a-zA-Z0-9]{8}"
     generate: expression
 objects:
-  - kind: BuildConfig
-    apiVersion: v1
-    metadata:
-      name: "${APPLICATION_NAME}"
-    spec:
-      triggers:
-        - type: Generic
-          generic:
-            secret: "${GENERIC_TRIGGER_SECRET}"
-        - type: GitHub
-          github:
-            secret: "${GITHUB_TRIGGER_SECRET}"
-        - type: ImageChange
-          imageChange: {}
-      source:
-        type: Git
-        git:
-          uri: "${GIT_URI}"
-          ref: "${GIT_REF}"
-      strategy:
-        type: Source
-        sourceStrategy:
-          from:
-            kind: ImageStreamTag
-            namespace: openshift
-            name: wildfly:latest
-          env:
-            - name: MAVEN_MIRROR_URL
-              value: "${MAVEN_MIRROR_URL}"
-            - name: MAVEN_ARGS
-              value: "clean package"
-      output:
-        to:
-          kind: ImageStreamTag
-          name: "${APPLICATION_NAME}:latest"
   - kind: ImageStream
     apiVersion: v1
     metadata:
