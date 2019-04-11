@@ -9,19 +9,11 @@ pipeline {
         TEAM_NAME = 'flywheel'
         DOCKER_REGISTRY = 'docker.artifactory.liatr.io'
         OPENSHIFT_CLUSTER = 'https://api.pro-us-east-1.openshift.com'
+        OPENSHIFT_PROJECT = 'liatrio'
     }
     stages {
         stage('Build and Publish Container to Artifactory using skaffold') {
             steps {
-                script {
-                     openshift.withCredentials('openshift-liatrio') {
-                        openshift.withCluster("${OPENSHIFT_CLUSTER}") {
-                            openshift.withProject('myproject') {
-                                echo "Hello from project ${openshift.project()} in cluster ${openshift.cluster()}"
-                            }
-                        }
-                    }
-                }
                 mavenJxBuildArtifactory()
             }
         }
