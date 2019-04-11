@@ -55,7 +55,7 @@ profiles:
         docker: {}
     tagPolicy:
       envTemplate:
-        template: "{{ .DOCKER_REGISTRY }}/liatrio/{{ .IMAGE_NAME }}"
+        template: "{{ .DOCKER_REGISTRY }}/liatrio/{{ .IMAGE_NAME }}:{{ .VERSION }}"
     local: {}
   deploy:
     helm:
@@ -65,4 +65,4 @@ profiles:
           chartPath: charts/springboot-local
           setValueTemplates:
             image.repository: '{{ .DOCKER_REGISTRY }}/liatrio/{{ .IMAGE_NAME }}'
-            image.tag: 'latest'
+            image.tag: '{{ .VERSION }}'
