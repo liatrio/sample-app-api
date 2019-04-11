@@ -65,4 +65,4 @@ profiles:
           chartPath: charts/springboot-local
           setValueTemplates:
             image.repository: '{{ .DOCKER_REGISTRY }}/liatrio/{{ .IMAGE_NAME }}'
-            image.tag: '{{ .DIGEST_HEX }}'
+            image.tag: 'latest'
