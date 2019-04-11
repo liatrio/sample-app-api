@@ -16,7 +16,7 @@ pipeline {
         }
         stage('Promote to Environments') {
             when {
-                branch 'master'
+                branch 'ENG-493'
             }
             steps {
                 promoteJx()
