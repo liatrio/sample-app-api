@@ -56,7 +56,8 @@ profiles:
     tagPolicy:
       envTemplate:
         template: "{{ .DOCKER_REGISTRY }}/liatrio/{{ .IMAGE_NAME }}:{{ .VERSION }}"
-    local: {}
+    local:
+      push: true
   deploy:
     helm:
       releases:
