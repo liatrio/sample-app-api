@@ -8,7 +8,7 @@ pipeline {
         ORG = 'liatrio'
         TEAM_NAME = 'flywheel'
         DOCKER_REGISTRY = 'docker.artifactory.liatr.io'
-        OPENSHIFT_CLUSTER = 'https://api.pro-us-east-1.openshift.com'
+        OPENSHIFT_CLUSTER = 'api.pro-us-east-1.openshift.com'
         OPENSHIFT_PROJECT = 'liatrio'
         TILLER_NAMESPACE = 'liatrio'
     }
