@@ -25,7 +25,8 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                mavenJxBuildArtifactory()
+                //mavenJxBuildArtifactory()
+                sh "echo deploy"
             }
         }
         stage("functional test") {
