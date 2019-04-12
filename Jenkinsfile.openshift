@@ -13,7 +13,17 @@ pipeline {
         TILLER_NAMESPACE = 'liatrio'
     }
     stages {
-        stage('Build and Publish Container to Artifactory using skaffold') {
+        stage('Build Docker image and publish to Artifactory') {
+            steps {
+                mavenBuildOpenshift()
+            }
+        }
+        stage('Publish Helm chart to Artifactory') {
+            steps {
+                helmBuildOpenshift()
+            }
+        }
+        stage('Deploy') {
             steps {
                 mavenJxBuildArtifactory()
             }
