@@ -25,8 +25,8 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                //mavenJxBuildArtifactory()
                 sh "echo deploy"
+                deployOpenshift()
             }
         }
         stage("functional test") {
