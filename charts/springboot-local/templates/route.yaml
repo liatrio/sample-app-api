@@ -5,6 +5,11 @@ metadata:
   name: {{ include "springboot-local.fullname" . }}
   annotations:
     description: Route for application's http service
+  labels:
+    app.kubernetes.io/name: {{ include "springboot-local.name" . }}
+    helm.sh/chart: {{ include "springboot-local.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
   {{- if .Values.route.hostname -}}
   host: {{ .Values.route.hostname }}
