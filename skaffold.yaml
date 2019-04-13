@@ -67,3 +67,4 @@ profiles:
           setValueTemplates:
             image.repository: '{{ .DOCKER_REGISTRY }}/liatrio/{{ .IMAGE_NAME }}'
             image.tag: '{{ .VERSION }}'
+            openshift: true

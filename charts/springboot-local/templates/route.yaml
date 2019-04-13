@@ -1,0 +1,15 @@
+{{- if .Values.openshift -}}
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: {{ include "springboot-local.fullname" . }}
+  annotations:
+    description: Route for application's http service
+spec:
+  {{- if .Values.route.hostname -}}
+  host: {{ .Values.route.hostname }}
+  {{- end }}
+  to:
+    kind: Service
+    name: {{ include "springboot-local.fullname" . }}
+{{- end }}

@@ -11,6 +11,11 @@ image:
 nameOverride: ""
 fullnameOverride: ""
 
+openshift: false
+
+route:
+  hostname: ""
+
 service:
   name: spring-boot
   type: ClusterIP
