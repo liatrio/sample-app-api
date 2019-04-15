@@ -12,6 +12,7 @@ pipeline {
         OPENSHIFT_PROJECT = 'liatrio'
         TILLER_NAMESPACE = 'liatrio'
         CHART_PATH = 'charts/springboot-local'
+        SKAFFOLD_PROFILE = 'openshift-online'
     }
     stages {
         stage('Build Docker image and publish to Artifactory') {
