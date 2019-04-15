@@ -11,6 +11,7 @@ pipeline {
         OPENSHIFT_CLUSTER = 'api.pro-us-east-1.openshift.com'
         OPENSHIFT_PROJECT = 'liatrio'
         TILLER_NAMESPACE = 'liatrio'
+        CHART_PATH = 'charts/springboot-local'
     }
     stages {
         stage('Build Docker image and publish to Artifactory') {
