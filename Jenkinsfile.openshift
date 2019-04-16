@@ -47,7 +47,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 container('maven') {
-                    deployOpenshift(openshift-token:'openshift-login-token')
+                    deployOpenshift(openshiftToken:'openshift-login-token')
                     sendBuildEvent(eventType:'deploy')
                 }
             }
