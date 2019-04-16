@@ -20,17 +20,19 @@ pipeline {
         stage('Build Docker image and publish to Artifactory') {
             steps {
               container('maven') {
-                  def pom = readMavenPom file: 'pom.xml'
-                  if (appVersion) {
-                      sh "mvn versions:set -DnewVersion=${appVersion}"
-                  } else {
-                      appVersion = pom.version.split("-")[0] + "-${BUILD_NUMBER}"
-                  }
-                  env.VERSION = appVersion
-                  env.APP_NAME = pom.artifactId
-                  env.GROUP_ID = pom.groupId
+                  script {
+                      def pom = readMavenPom file: 'pom.xml'
+                      if (appVersion) {
+                          sh "mvn versions:set -DnewVersion=${appVersion}"
+                      } else {
+                          appVersion = pom.version.split("-")[0] + "-${BUILD_NUMBER}"
+                      }
+                      env.VERSION = appVersion
+                      env.APP_NAME = pom.artifactId
+                      env.GROUP_ID = pom.groupId
 
-                  sh "mvn clean install"
+                      sh "mvn clean install"
+                  }
                   skaffoldBuild()
                 }
             }
