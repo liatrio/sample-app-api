@@ -11,19 +11,35 @@ pipeline {
         OPENSHIFT_CLUSTER = 'api.pro-us-east-1.openshift.com'
         OPENSHIFT_PROJECT = 'liatrio'
         TILLER_NAMESPACE = 'liatrio'
-        CHART_PATH = 'charts/springboot-local'
-        CHART_NAME = 'springboot-local'
+        CHART_PATH = 'charts/sample-app-api'
+        APP_NAME = 'sample-app-api'
+        DEPLOY_NAME = 'sample-app-api'
         SKAFFOLD_PROFILE = 'openshift-online'
     }
     stages {
         stage('Build Docker image and publish to Artifactory') {
             steps {
-                mavenBuildOpenshift()
+              container('maven') {
+                  def pom = readMavenPom file: 'pom.xml'
+                  if (appVersion) {
+                      sh "mvn versions:set -DnewVersion=${appVersion}"
+                  } else {
+                      appVersion = pom.version.split("-")[0] + "-${BUILD_NUMBER}"
+                  }
+                  env.VERSION = appVersion
+                  env.APP_NAME = pom.artifactId
+                  env.GROUP_ID = pom.groupId
+
+                  sh "mvn clean install"
+                  skaffoldBuild()
+                }
             }
         }
         stage('Publish Helm chart to Artifactory') {
             steps {
-                helmBuildOpenshift()
+                container('maven') {
+                    deployHelmArtifactory()
+                }
             }
         }
         stage('Deploy') {
