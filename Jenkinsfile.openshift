@@ -22,11 +22,11 @@ pipeline {
               container('maven') {
                   script {
                       def pom = readMavenPom file: 'pom.xml'
-                      if (appVersion) {
-                          sh "mvn versions:set -DnewVersion=${appVersion}"
-                      } else {
-                          appVersion = pom.version.split("-")[0] + "-${BUILD_NUMBER}"
-                      }
+                      //if (appVersion) {
+                      //    sh "mvn versions:set -DnewVersion=${appVersion}"
+                      //} else {
+                          def appVersion = pom.version.split("-")[0] + "-${BUILD_NUMBER}"
+                      //}
                       env.VERSION = appVersion
                       env.APP_NAME = pom.artifactId
                       env.GROUP_ID = pom.groupId
