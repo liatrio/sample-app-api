@@ -46,7 +46,9 @@ pipeline {
         stage('Deploy') {
             steps {
                 //deployOpenshift()
-                skaffoldDeploy()
+                container('maven') {
+                    skaffoldDeploy()
+                }
             }
         }
         stage("functional test") {
