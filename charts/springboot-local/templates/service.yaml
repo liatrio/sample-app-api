@@ -7,6 +7,7 @@ metadata:
     helm.sh/chart: {{ include "springboot-local.chart" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
+    app.kubernetes.io/appVersion: {{ include "springboot-local.version" . }}
 spec:
   type: {{ .Values.service.type }}
   ports:

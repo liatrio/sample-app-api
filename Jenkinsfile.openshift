@@ -35,9 +35,10 @@ pipeline {
         stage("functional test") {
             steps {
                 sendBuildEvent(eventType:'test')
-                //container('maven') {
-                //    sh "cd functional-tests && mvn clean test -DappUrl=${APP_URL}"
-                //}
+                container('maven') {
+                    sh "echo running functional test"
+                    //sh "cd functional-tests && mvn clean test -DappUrl=${APP_URL}"
+                }
             }
         }
     }

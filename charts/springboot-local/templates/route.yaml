@@ -7,6 +7,7 @@ metadata:
     description: Route for application's http service
   labels:
     app.kubernetes.io/name: {{ include "springboot-local.name" . }}
+    app.kubernetes.io/appVersion: {{ include "springboot-local.version" . }}
     helm.sh/chart: {{ include "springboot-local.chart" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
