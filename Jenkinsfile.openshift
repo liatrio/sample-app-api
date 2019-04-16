@@ -33,6 +33,7 @@ pipeline {
                       sh "mvn clean install"
                   }
                   skaffoldBuild()
+                  sendBuildEvent(eventType:'build')
                 }
             }
         }
@@ -45,9 +46,9 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                //deployOpenshift()
                 container('maven') {
-                    skaffoldDeploy()
+                    deployOpenshift()
+                    sendBuildEvent(eventType:'deploy')
                 }
             }
         }
