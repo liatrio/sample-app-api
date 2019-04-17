@@ -47,7 +47,7 @@ pipeline {
         stage('Deploy Helm chart to OpenShift cluster') {
             steps {
                 container('maven') {
-                    deployOpenshift(openshiftToken:'openshift-login-token', helmRepositoryCredentials:'artifactory-takumin')
+                    deployHelmChartOpenshift(openshiftToken:'openshift-login-token', helmRepositoryCredentials:'artifactory-takumin')
                     sendBuildEvent(eventType:'deploy')
                 }
             }
