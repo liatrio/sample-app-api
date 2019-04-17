@@ -11,7 +11,7 @@ pipeline {
         OPENSHIFT_CLUSTER = 'api.pro-us-east-1.openshift.com'
         OPENSHIFT_PROJECT = 'liatrio'
         TILLER_NAMESPACE = 'liatrio'
-        CHART_PATH = 'charts/sample-app-api'
+        CHART_PATH = 'charts/springboot-local'
         SKAFFOLD_PROFILE = 'openshift-online'
     }
     stages {
