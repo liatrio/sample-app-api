@@ -22,7 +22,7 @@ pipeline {
                   script {
                       sh "env"
                       def pom = readMavenPom file: 'pom.xml'
-                      def appVersion = pom.version.split("-")[0] + "-${BUILD_NUMBER}"
+                      def appVersion = pom.version.split("-")[0] + "-${GIT_COMMIT[0..10]}"
                       env.VERSION = appVersion
                       env.APP_NAME = pom.artifactId
                       env.GROUP_ID = pom.groupId
