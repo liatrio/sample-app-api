@@ -12,7 +12,6 @@ pipeline {
         OPENSHIFT_PROJECT = 'liatrio'
         TILLER_NAMESPACE = 'liatrio'
         CHART_PATH = 'charts/sample-app-api'
-        DEPLOY_NAME = 'sample-app-app'
         SKAFFOLD_PROFILE = 'openshift-online'
     }
     stages {
