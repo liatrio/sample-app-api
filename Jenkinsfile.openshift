@@ -20,7 +20,7 @@ pipeline {
             steps {
               container('maven') {
                   script {
-                      echo env
+                      sh "env"
                       def pom = readMavenPom file: 'pom.xml'
                       def appVersion = pom.version.split("-")[0] + "-${BUILD_NUMBER}"
                       env.VERSION = appVersion
