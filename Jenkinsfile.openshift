@@ -40,7 +40,7 @@ pipeline {
         stage('Publish Helm chart to Artifactory') {
             steps {
                 container('maven') {
-                    deployHelmArtifactory(helmRepositoryCredentials:'artifactory-takumin')
+                    publishHelmChartArtifactory(helmRepositoryCredentials:'artifactory-takumin')
                 }
             }
         }
