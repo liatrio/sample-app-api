@@ -20,12 +20,9 @@ pipeline {
             steps {
               container('maven') {
                   script {
+                      echo env
                       def pom = readMavenPom file: 'pom.xml'
-                      //if (appVersion) {
-                      //    sh "mvn versions:set -DnewVersion=${appVersion}"
-                      //} else {
-                          def appVersion = pom.version.split("-")[0] + "-${BUILD_NUMBER}"
-                      //}
+                      def appVersion = pom.version.split("-")[0] + "-${BUILD_NUMBER}"
                       env.VERSION = appVersion
                       env.APP_NAME = pom.artifactId
                       env.GROUP_ID = pom.groupId
