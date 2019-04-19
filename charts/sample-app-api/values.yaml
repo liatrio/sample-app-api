@@ -33,3 +33,5 @@ readinessProbe:
   timeoutSeconds: 1
 terminationGracePeriodSeconds: 10
 openshift: false
+route:
+  hostname: ""
