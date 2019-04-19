@@ -5,7 +5,6 @@ metadata:
   labels:
     app.kubernetes.io/name: {{ include "springboot-local.name" . }}
     helm.sh/chart: {{ include "springboot-local.chart" . }}
-    app.kubernetes.io/appVersion: {{ include "springboot-local.version" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
