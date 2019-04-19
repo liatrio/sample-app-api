@@ -11,7 +11,6 @@ pipeline {
         OPENSHIFT_CLUSTER = 'api.pro-us-east-1.openshift.com'
         OPENSHIFT_PROJECT = 'liatrio'
         TILLER_NAMESPACE = 'liatrio'
-        CHART_PATH = 'charts/springboot-local'
         SKAFFOLD_PROFILE = 'openshift-online'
     }
     stages {
@@ -35,14 +34,14 @@ pipeline {
         stage('Publish Helm chart to Artifactory') {
             steps {
                 container('maven') {
-                    publishHelmChartArtifactory(helmRepositoryCredentials:'artifactory-takumin')
+                    publishHelmChartArtifactory(helmRepositoryCredentials:'artifactory-takumin', chartName:'springboot-local')
                 }
             }
         }
         stage('Deploy Helm chart to OpenShift cluster') {
             steps {
                 container('maven') {
-                    deployHelmChartOpenshift(openshiftToken:'openshift-login-token', helmRepositoryCredentials:'artifactory-takumin')
+                    deployHelmChartOpenshift(openshiftToken:'openshift-login-token', helmRepositoryCredentials:'artifactory-takumin', chartName:'springboot-local')
                     sendBuildEvent(eventType:'deploy')
                 }
             }
