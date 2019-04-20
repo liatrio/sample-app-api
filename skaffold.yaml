@@ -43,7 +43,7 @@ profiles:
       releases:
         - name: sample-app-api
           namespace: myproject
-          chartPath: charts/springboot-local
+          chartPath: charts/sample-app-api
           setValueTemplates:
             image.repository: '{{ .DOCKER_REGISTRY }}/myproject/{{ .IMAGE_NAME }}'
             image.tag: 'latest'
@@ -63,7 +63,7 @@ profiles:
       releases:
         - name: sample-app-api
           namespace: liatrio
-          chartPath: charts/springboot-local
+          chartPath: charts/sample-app-api
           setValueTemplates:
             image.repository: '{{ .DOCKER_REGISTRY }}/liatrio/{{ .IMAGE_NAME }}'
             image.tag: '{{ .VERSION }}'
