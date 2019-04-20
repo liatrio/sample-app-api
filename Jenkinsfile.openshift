@@ -1,0 +1,70 @@
+library 'pipeline-library'
+
+pipeline {
+    agent {
+        label "jenkins-maven-java11"
+    }
+    environment {
+        ORG = 'liatrio'
+        TEAM_NAME = 'flywheel'
+        DOCKER_REGISTRY = 'docker.artifactory.liatr.io'
+        OPENSHIFT_CLUSTER = 'api.pro-us-east-1.openshift.com'
+        OPENSHIFT_PROJECT = 'liatrio'
+        TILLER_NAMESPACE = 'liatrio'
+        SKAFFOLD_PROFILE = 'openshift-online'
+    }
+    stages {
+        stage('Build Docker image and publish to Artifactory') {
+            steps {
+              container('maven') {
+                  script {
+                      def pom = readMavenPom file: 'pom.xml'
+                      def appVersion = pom.version.split("-")[0] + "-${GIT_COMMIT[0..10]}"
+                      env.VERSION = appVersion
+                      env.APP_NAME = pom.artifactId
+                      env.GROUP_ID = pom.groupId
+
+                      sh "mvn clean install"
+                  }
+                  skaffoldBuild()
+                  sendBuildEvent(eventType:'build')
+                }
+            }
+        }
+        stage('Publish Helm chart to Artifactory') {
+            steps {
+                container('maven') {
+                    publishHelmChartArtifactory(helmRepositoryCredentials:'artifactory-takumin')
+                }
+            }
+        }
+        stage('Deploy Helm chart to OpenShift cluster') {
+            steps {
+                container('maven') {
+                    deployHelmChartOpenshift(openshiftToken:'openshift-login-token', helmRepositoryCredentials:'artifactory-takumin')
+                    sendBuildEvent(eventType:'deploy')
+                }
+            }
+        }
+        stage("functional test") {
+            steps {
+                sendBuildEvent(eventType:'test')
+                container('maven') {
+                    sh "echo running functional test"
+                    //sh "cd functional-tests && mvn clean test -DappUrl=${APP_URL}"
+                }
+            }
+        }
+    }
+    post {
+        always {
+            cleanWs()
+        }
+        fixed {
+            sendHealthyEvent()
+        }
+        regression {
+            sendUnhealthyEvent()
+        }
+    }
+}
