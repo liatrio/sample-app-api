@@ -7,7 +7,6 @@ image:
   tag: dev
   pullPolicy: IfNotPresent
 service:
-  name: sample-app-api
   type: ClusterIP
   externalPort: 80
   internalPort: 8080
