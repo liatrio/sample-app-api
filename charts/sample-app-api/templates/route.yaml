@@ -14,5 +14,9 @@ spec:
   {{- end }}
   to:
     kind: Service
-    name: {{ .Values.service.name }}
+    {{- if .Values.service.name }}
+      name: {{ .Values.service.name }}
+    {{- else }}
+      name: {{ .Release.Name }}
+    {{- end }}
 {{- end }}
