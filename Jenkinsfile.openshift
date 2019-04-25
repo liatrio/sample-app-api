@@ -1,4 +1,4 @@
-library 'pipeline-library@tiller-namespace'
+library 'pipeline-library'
 
 pipeline {
     agent {
