@@ -2,7 +2,7 @@
 kind: Route
 apiVersion: route.openshift.io/v1
 metadata:
-  name: {{ template "fullname" . }}
+  name: {{ .Release.Name }}
   annotations:
     description: OpenShift route for application's http service
   labels:
@@ -14,5 +14,9 @@ spec:
   {{- end }}
   to:
     kind: Service
+    {{- if .Values.service.name }}
     name: {{ .Values.service.name }}
+    {{- else }}
+    name: {{ .Release.Name }}
+    {{- end }}
 {{- end }}
