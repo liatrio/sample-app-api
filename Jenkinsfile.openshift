@@ -34,14 +34,14 @@ pipeline {
         stage('Publish Helm chart to Artifactory') {
             steps {
                 container('maven') {
-                    publishHelmChartArtifactory(helmRepositoryCredentials:'artifactory-takumin')
+                    publishHelmChartArtifactory(helmRepositoryCredentials:'artifactory-credentials')
                 }
             }
         }
         stage('Deploy Helm chart to OpenShift cluster') {
             steps {
                 container('maven') {
-                    deployHelmChartOpenshift(openshiftToken:'openshift-login-token', helmRepositoryCredentials:'artifactory-takumin')
+                    deployHelmChartOpenshift(openshiftToken:'openshift-login-token', helmRepositoryCredentials:'artifactory-credentials')
                     sendBuildEvent(eventType:'deploy')
                 }
             }
