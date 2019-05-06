@@ -2,7 +2,7 @@ library 'pipeline-library'
 
 pipeline {
     agent {
-        label "jenkins-maven-java11"
+        label "jenkins-maven-java15"
     }
     environment {
         ORG = 'liatrio'
