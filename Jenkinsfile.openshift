@@ -32,7 +32,7 @@ pipeline {
           agent { label 'lead-toolchain-skaffold' }
             steps {
                 container('skaffold') {
-                    publishHelmChartArtifactory(helmRepositoryCredentials:'artifactory-credentials')
+                    publishHelmChartArtifactory(helmRepositoryCredentials:'jenkins-credential-artifactory')
                 }
             }
         }
@@ -40,7 +40,7 @@ pipeline {
           agent { label 'lead-toolchain-openshift' }
             steps {
                 container('openshift') {
-                    deployHelmChartOpenshift(openshiftToken:'openshift-login-token', helmRepositoryCredentials:'artifactory-credentials')
+                    deployHelmChartOpenshift(openshiftToken:'openshift-login-token', helmRepositoryCredentials:'jenkins-credential-artifactory')
                     sendBuildEvent(eventType:'deploy')
                 }
             }
@@ -55,7 +55,7 @@ pipeline {
                 }
             }
         }
-    } /*
+    }
     post {
         always {
             cleanWs()
@@ -66,5 +66,5 @@ pipeline {
         regression {
             sendUnhealthyEvent()
         }
-    } */
+    }
 }
