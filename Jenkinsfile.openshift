@@ -1,4 +1,4 @@
-library 'pipeline-library@Remove-oc-Plugin'
+library 'pipeline-library'
 
 pipeline {
   agent { label 'lead-toolchain-skaffold' }
