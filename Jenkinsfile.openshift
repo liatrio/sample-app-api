@@ -1,6 +1,7 @@
 library 'pipeline-library@Remove-oc-Plugin'
 
 pipeline {
+  agent none
     environment {
         ORG = 'liatrio'
         TEAM_NAME = 'flywheel'
