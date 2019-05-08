@@ -13,7 +13,6 @@ pipeline {
     }
     stages {
         stage('Build Docker image and publish to Artifactory') {
-          agent { label 'lead-toolchain-skaffold' }
             steps {
               container('skaffold') {
                   script {
@@ -29,7 +28,6 @@ pipeline {
             }
         }
         stage('Publish Helm chart to Artifactory') {
-          agent { label 'lead-toolchain-skaffold' }
             steps {
                 container('skaffold') {
                     publishHelmChartArtifactory(helmRepositoryCredentials:'jenkins-credential-artifactory')
@@ -37,7 +35,6 @@ pipeline {
             }
         }
         stage('Deploy Helm chart to OpenShift cluster') {
-          agent { label 'lead-toolchain-openshift' }
             steps {
                 container('openshift') {
                     deployHelmChartOpenshift(openshiftToken:'openshift-login-token', helmRepositoryCredentials:'jenkins-credential-artifactory')
@@ -46,7 +43,6 @@ pipeline {
             }
         }
         stage("functional test") {
-          agent { label 'lead-toolchain-skaffold' }
             steps {
                 sendBuildEvent(eventType:'test')
                 container('skaffold') {
