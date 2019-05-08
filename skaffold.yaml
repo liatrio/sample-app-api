@@ -2,15 +2,13 @@ apiVersion: skaffold/v1beta3
 kind: Config
 build:
   artifacts:
-  - image: changeme
+  - image: sample-app-api
     context: .
     docker: {}
   tagPolicy:
     envTemplate:
-      template: '{{.DOCKER_REGISTRY}}/liatrio/sample-app-api:{{.VERSION}}'
+      template: "{{ .DOCKER_REGISTRY }}/liatrio/{{ .IMAGE_NAME }}:{{ .VERSION }}" 
   local: {}
-deploy:
-  kubectl: {}
 profiles:
 - name: dev
   build:
