@@ -15,7 +15,7 @@ pipeline {
         stage('Build Docker image and publish to Artifactory') {
           agent { label 'lead-toolchain-skaffold' }
             steps {
-              container('maven') {
+              container('skaffold') {
                   script {
                       def pom = readMavenPom file: 'pom.xml'
                       def appVersion = pom.version.split("-")[0] + "-${GIT_COMMIT[0..10]}"
@@ -24,8 +24,6 @@ pipeline {
                       env.GROUP_ID = pom.groupId
                       sh "mvn clean install"
                   }
-              }
-              container ('skaffold') {
                   skaffoldBuild()
                   sendBuildEvent(eventType:'build')
                 }
