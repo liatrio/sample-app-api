@@ -22,9 +22,10 @@ pipeline {
                       env.VERSION = appVersion
                       env.APP_NAME = pom.artifactId
                       env.GROUP_ID = pom.groupId
-
                       sh "mvn clean install"
                   }
+              }
+              container ('skaffold') {
                   skaffoldBuild()
                   sendBuildEvent(eventType:'build')
                 }
