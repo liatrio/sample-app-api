@@ -38,7 +38,7 @@ pipeline {
           agent { label 'lead-toolchain-openshift' }
             steps {
                 container('openshift') {
-                    deployHelmChartOpenshift(openshiftToken:'openshift-login-token', helmRepositoryCredentials:'jenkins-credential-artifactory')
+                    deployHelmChartOpenshift(openshiftToken:'jenkins-credential-openshift', helmRepositoryCredentials:'jenkins-credential-artifactory')
                     sendBuildEvent(eventType:'deploy')
                 }
             }
