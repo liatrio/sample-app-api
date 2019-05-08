@@ -1,9 +1,6 @@
-library 'pipeline-library'
+library 'pipeline-library@Remove-oc-Plugin'
 
 pipeline {
-    agent {
-        label "jenkins-maven-java11"
-    }
     environment {
         ORG = 'liatrio'
         TEAM_NAME = 'flywheel'
@@ -15,8 +12,9 @@ pipeline {
     }
     stages {
         stage('Build Docker image and publish to Artifactory') {
+          agent { label 'lead-toolchain-skaffold' }
             steps {
-              container('maven') {
+              container('skaffold') {
                   script {
                       def pom = readMavenPom file: 'pom.xml'
                       def appVersion = pom.version.split("-")[0] + "-${GIT_COMMIT[0..10]}"
@@ -32,24 +30,27 @@ pipeline {
             }
         }
         stage('Publish Helm chart to Artifactory') {
+          agent { label 'lead-toolchain-skaffold' }
             steps {
-                container('maven') {
+                container('skaffold') {
                     publishHelmChartArtifactory(helmRepositoryCredentials:'artifactory-credentials')
                 }
             }
         }
         stage('Deploy Helm chart to OpenShift cluster') {
+          agent { label 'lead-toolchain-openshift' }
             steps {
-                container('maven') {
+                container('openshift') {
                     deployHelmChartOpenshift(openshiftToken:'openshift-login-token', helmRepositoryCredentials:'artifactory-credentials')
                     sendBuildEvent(eventType:'deploy')
                 }
             }
         }
         stage("functional test") {
+          agent { label 'lead-toolchain-skaffold' }
             steps {
                 sendBuildEvent(eventType:'test')
-                container('maven') {
+                container('skaffold') {
                     sh "echo running functional test"
                     //sh "cd functional-tests && mvn clean test -DappUrl=${APP_URL}"
                 }
