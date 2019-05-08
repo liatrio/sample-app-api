@@ -35,6 +35,7 @@ pipeline {
             }
         }
         stage('Deploy Helm chart to OpenShift cluster') {
+          agent { label 'lead-toolchain-openshift' }
             steps {
                 container('openshift') {
                     deployHelmChartOpenshift(openshiftToken:'openshift-login-token', helmRepositoryCredentials:'jenkins-credential-artifactory')
@@ -51,7 +52,7 @@ pipeline {
                 }
             }
         }
-    } /*
+    }
     post {
         always {
             cleanWs()
@@ -62,5 +63,5 @@ pipeline {
         regression {
             sendUnhealthyEvent()
         }
-    } */
+    }
 }
