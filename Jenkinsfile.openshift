@@ -1,9 +1,7 @@
 library 'pipeline-library'
 
 pipeline {
-    agent {
-        label "jenkins-maven-java11"
-    }
+  agent { label 'lead-toolchain-skaffold' }
     environment {
         ORG = 'liatrio'
         TEAM_NAME = 'flywheel'
@@ -16,15 +14,13 @@ pipeline {
     stages {
         stage('Build Docker image and publish to Artifactory') {
             steps {
-              container('maven') {
+              container('skaffold') {
                   script {
                       def pom = readMavenPom file: 'pom.xml'
                       def appVersion = pom.version.split("-")[0] + "-${GIT_COMMIT[0..10]}"
                       env.VERSION = appVersion
                       env.APP_NAME = pom.artifactId
                       env.GROUP_ID = pom.groupId
-
-                      sh "mvn clean install"
                   }
                   skaffoldBuild()
                   sendBuildEvent(eventType:'build')
@@ -33,15 +29,16 @@ pipeline {
         }
         stage('Publish Helm chart to Artifactory') {
             steps {
-                container('maven') {
-                    publishHelmChartArtifactory(helmRepositoryCredentials:'artifactory-credentials')
+                container('skaffold') {
+                    publishHelmChartArtifactory(helmRepositoryCredentials:'jenkins-credential-artifactory')
                 }
             }
         }
         stage('Deploy Helm chart to OpenShift cluster') {
+          agent { label 'lead-toolchain-openshift' }
             steps {
-                container('maven') {
-                    deployHelmChartOpenshift(openshiftToken:'openshift-login-token', helmRepositoryCredentials:'artifactory-credentials')
+                container('openshift') {
+                    deployHelmChartOpenshift(openshiftToken:'jenkins-credential-openshift', helmRepositoryCredentials:'jenkins-credential-artifactory')
                     sendBuildEvent(eventType:'deploy')
                 }
             }
@@ -49,7 +46,7 @@ pipeline {
         stage("functional test") {
             steps {
                 sendBuildEvent(eventType:'test')
-                container('maven') {
+                container('skaffold') {
                     sh "echo running functional test"
                     //sh "cd functional-tests && mvn clean test -DappUrl=${APP_URL}"
                 }
