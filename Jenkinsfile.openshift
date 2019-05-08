@@ -55,7 +55,7 @@ pipeline {
                 }
             }
         }
-    }
+    } /*
     post {
         always {
             cleanWs()
@@ -66,5 +66,5 @@ pipeline {
         regression {
             sendUnhealthyEvent()
         }
-    }
+    } */
 }
