@@ -1,7 +1,7 @@
 library 'pipeline-library@Remove-oc-Plugin'
 
 pipeline {
-  agent none
+  agent { label 'lead-toolchain-skaffold' }
     environment {
         ORG = 'liatrio'
         TEAM_NAME = 'flywheel'
