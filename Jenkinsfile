@@ -1,46 +1,47 @@
-library 'pipeline-library'
+library identifier: 'lib@master', retriever: modernSCM([
+  $class: 'GitSCMSource',
+  remote: 'https://github.com/liatrio/pipeline-library.git'
+])
+library identifier: 'slack-lib@master', retriever: modernSCM([
+  $class: 'GitSCMSource',
+  remote: 'https://github.com/liatrio/slack-pipeline-library.git'
+])
 
 pipeline {
-    agent {
-        label "jenkins-maven-java11"
+  agent none
+  stages {
+    stage('Build') {
+      agent {
+        kubernetes {
+          label 'jnlp-slave'
+          defaultContainer 'jnlp'
+        }
+      }
+      steps {
+        sh "echo 'hello world'"
+      }
     }
-    environment {
-        ORG = 'liatrio'
-        TEAM_NAME = 'flywheel'
-        CHARTMUSEUM_CREDS = credentials('jenkins-x-chartmuseum')
+    stage('Promote to Environments') {
+      agent {
+        kubernetes {
+          label 'jnlp-slave'
+          defaultContainer 'jnlp'
+        }
+      }
+      steps {
+        sh "echo 'hello world'"
+      }
     }
-    stages {
-        stage('Build') {
-            steps {
-                mavenJxBuild()
-            }
+    stage("functional test") {
+      agent {
+        kubernetes {
+          label 'jnlp-slave'
+          defaultContainer 'jnlp'
         }
-        stage('Promote to Environments') {
-            when {
-                branch 'master'
-            }
-            steps {
-                promoteJx()
-            }
-        }
-        stage("functional test") {
-            steps {
-                sendBuildEvent(eventType:'test')
-                container('maven') {
-                    sh "cd functional-tests && mvn clean test -DappUrl=${APP_URL}"
-                }
-            }
-        }
+      }
+      steps {
+        sh "echo 'hello world'"
+      }
     }
-    post {
-        always {
-            cleanWs()
-        }
-        fixed {
-            sendHealthyEvent()
-        }
-        regression {
-            sendUnhealthyEvent()
-        }
-    }
+  }
 }
