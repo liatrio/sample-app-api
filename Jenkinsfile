@@ -1,7 +1,4 @@
 pipeline {
-    agent {
-        label "jenkins-maven-java11"
-    }
     environment {
         ORG = 'liatrio'
     }
