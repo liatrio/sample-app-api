@@ -1,4 +1,5 @@
 pipeline {
+    agent any
     environment {
         ORG = 'liatrio'
     }
@@ -13,6 +14,5 @@ pipeline {
                 sh 'docker image ls'
             }
         }
-       
     }
 }
