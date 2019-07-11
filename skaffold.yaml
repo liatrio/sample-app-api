@@ -7,16 +7,16 @@ build:
     docker: {}
   tagPolicy:
     envTemplate:
-      template: "{{ .DOCKER_REGISTRY }}/liatrio/{{ .IMAGE_NAME }}:{{ .VERSION }}" 
+      template: "{{ .DOCKER_REGISTRY }}/liatrio/{{ .IMAGE_NAME }}:{{ .VERSION }}"
   local: {}
 profiles:
 - name: dev
   build:
     artifacts:
-    - docker: {}
+    - image: sample-app-api
     tagPolicy:
       envTemplate:
-        template: '{{.DOCKER_REGISTRY}}/liatrio/sample-app-api:{{.DIGEST_HEX}}'
+        template: 'sample-app-api'
     local: {}
   deploy:
     helm:
@@ -24,7 +24,7 @@ profiles:
       - name: sample-app-api
         chartPath: charts/sample-app-api
         setValueTemplates:
-          image.repository: '{{.DOCKER_REGISTRY}}/liatrio/sample-app-api'
+          image.repository: 'sample-app-api'
           image.tag: '{{.DIGEST_HEX}}'
 - name: minishift
   build:
