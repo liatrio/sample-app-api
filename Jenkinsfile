@@ -13,15 +13,15 @@ pipeline {
       stage('Build') {
         steps {
         // Create sonar.properties for sonar maven plugin
-          withCredentials([string(credentialsId: 'sonarqube', variable: 'sonarqubeToken')]) {
-            sh "echo 'sonar.login=${sonarqubeToken}' >> sonar.properties"
-          }
+        //  withCredentials([string(credentialsId: 'sonarqube', variable: 'sonarqubeToken')]) {
+        //    sh "echo 'sonar.login=${sonarqubeToken}' >> sonar.properties"
+        //  }
             // Create and test image with skaffold
             container('skaffold') {
             script {
-            docker.withRegistry("https://${SKAFFOLD_DEFAULT_REPO}", 'artifactory-credentials') {
-              sh "skaffold build"
-            }
+              //docker.withRegistry("https://${SKAFFOLD_DEFAULT_REPO}", 'artifactory-credentials') {
+                sh "skaffold build"
+            //}
           }
         }
       }
