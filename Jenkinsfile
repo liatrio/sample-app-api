@@ -15,16 +15,15 @@ pipeline {
             }
         }
         stage('Build') {
-          agent {
-                  docker { image 'skaffold' }
-              }
               steps {
                   // Create and test image with skaffold
-                  script {
-                    sh "skaffold build"
+                  docker.withRegistry('docker.artifactory.liatr.io', 'artifactory'){
+                    docker.image('docker.artifactory.liatr.io/liatrio/builder-image-skaffold:v1.0.13') {
+                      sh 'skaffold -p dev build'
+                    }
                   }
               }
-         }     
+         }
         stage('Run Locally') {
             steps {
                 sh 'echo start docker container'
