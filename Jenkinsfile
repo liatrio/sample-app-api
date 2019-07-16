@@ -6,8 +6,8 @@ pipeline {
     }
     stages {
         stage('Run Sonar') {
-            steps {
-                sh 'echo running sonar'
+            steps
+{                sh 'echo running sonar'
                 // Create sonar.properties for sonar maven plugin
                 //  withCredentials([string(credentialsId: 'sonarqube', variable: 'sonarqubeToken')]) {
                 //    sh "echo 'sonar.login=${sonarqubeToken}' >> sonar.properties"
@@ -15,12 +15,17 @@ pipeline {
             }
         }
         stage('Build') {
+          agent {
+            docker {
+              image 'docker.artifactory.liatr.io/liatrio/builder-image-skaffold:v1.0.13'
+              registryUrl 'https://docker.artifactory.liatr.io'
+              registryCredentialsId 'artifactory'
+            }
+          }
               steps {
+                  script {
                   // Create and test image with skaffold
-                  docker.withRegistry('docker.artifactory.liatr.io', 'artifactory'){
-                    docker.image('docker.artifactory.liatr.io/liatrio/builder-image-skaffold:v1.0.13') {
                       sh 'skaffold -p dev build'
-                    }
                   }
               }
          }
