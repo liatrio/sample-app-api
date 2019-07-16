@@ -17,7 +17,8 @@ profiles:
     tagPolicy:
       envTemplate:
         template: 'sample-app-api'
-    local: {}
+    local:
+      push: false
   deploy:
     helm:
       releases:
